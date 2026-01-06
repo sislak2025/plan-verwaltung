@@ -12,7 +12,7 @@ if (!class_exists('PV_Importapi')) {
 
         public function __construct()
         {
-            $this->url = 'https://wochenplan.sislak24.de/api/v5/';
+            $this->url = 'https://proad.sislak24.de/api/v5/';
             $this->api_key = '7573d945a40b4c9da1095c70b456c58131004d0586e115b7a94791cd68ba9b6300aef306fd189e6cc03241c2540dde29e0030670a92394adf342883e0df6e514';
             $this->args = array(
                 'sslverify' => false,
