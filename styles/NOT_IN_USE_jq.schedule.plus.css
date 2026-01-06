@@ -1,0 +1,237 @@
+.jq-schedule-plus {}
+
+.jq-schedule-plus .clear {
+	clear: both;
+	height: 0;
+	line-height: 0;
+}
+
+.jq-schedule-plus .sc_wrapper {}
+
+.jq-schedule-plus .sc_menu {
+	width: 100%;
+	height: 26px;
+}
+
+.jq-schedule-plus .sc_menu .sc_header_cell {
+	float: left;
+}
+
+.jq-schedule-plus .sc_menu .sc_header {
+	float: left;
+	height: 26px;
+	position: relative;
+	overflow: hidden;
+}
+
+.jq-schedule-plus .sc_menu .sc_header .sc_time {
+	text-align: center;
+	border-left: solid 1px #FFF;
+	background: #6187AE;
+	border-color: #c0c0c0;
+}
+
+.jq-schedule-plus .sc_menu .sc_header_cell,
+.jq-schedule-plus .sc_data {
+	float: left;
+	font-weight: bold;
+	background: #6187AE;
+	border-color: #c0c0c0;
+	color: white;
+	position: relative;
+}
+
+.jq-schedule-plus .sc_menu .sc_header_scroll,
+.jq-schedule-plus .sc_menu .sc_header_date_scroll,
+.jq-schedule-plus .sc_data .sc_data_scroll {
+	position: absolute;
+	left: 0;
+	top: 0;
+}
+
+.jq-schedule-plus .sc_menu .sc_header_cell,
+.jq-schedule-plus .sc_header .sc_time,
+.jq-schedule-plus .sc_main_scroll .sc_time {
+	color: #FFFFFF;
+	padding: 4px 0;
+	line-height: 18px;
+	height: 18px;
+	display: block;
+}
+
+.jq-schedule-plus .sc_header .sc_time,
+.jq-schedule-plus .sc_main_scroll .sc_time {
+	float: left;
+}
+
+.jq-schedule-plus .sc_main_box,
+.jq-schedule-plus .sc_data {
+	max-height: 500px;
+	overflow: hidden;
+}
+
+.jq-schedule-plus .sc_main_box {
+	float: left;
+	overflow-x: auto;
+	overflow-y: auto;
+}
+
+.jq-schedule-plus .sc_main_scroll {}
+
+.jq-schedule-plus .sc_main {
+	position: relative;
+}
+
+.jq-schedule-plus .timeline {
+	position: relative;
+}
+
+.jq-schedule-plus .sc_Bar {
+	position: absolute;
+	color: #FFF;
+	background: #ff4800;
+	cursor: pointer;
+	z-index: 10;
+	box-shadow: 2px 2px 4px #333;
+	-moz-box-shadow: 2px 2px 4px #333;
+	-webkit-box-shadow: 2px 2px 4px #333;
+}
+
+.jq-schedule-plus .ui-draggable-dragging,
+.jq-schedule-plus .ui-resizeable {
+	z-index: 20;
+}
+
+.jq-schedule-plus .sc_Bar .head {
+	display: block;
+	padding: 6px 8px 0;
+	font-size: 12px;
+	height: 16px;
+	overflow: hidden;
+}
+
+.jq-schedule-plus .sc_Bar .text {
+	display: block;
+	padding: 5px 15px 0;
+	font-weight: bold;
+	height: 18px;
+	overflow: hidden;
+}
+
+.jq-schedule-plus .timeline,
+.jq-schedule-plus .sc_main .tb {
+	border-bottom: solid 2px #666;
+}
+
+.jq-schedule-plus .sc_data .timeline {
+	overflow: hidden;
+}
+
+.jq-schedule-plus .sc_data .timeline div {
+	padding-left: 10px;
+	display: block;
+}
+
+.jq-schedule-plus .sc_data .timeline div.timeline-title {
+	padding-top: 10px;
+}
+
+.jq-schedule-plus .sc_data .timeline div.title {
+	float: left;
+	padding: 10px 0 10px 10px;
+	width: 92px;
+}
+
+.jq-schedule-plus .sc_main_scroll .sc_main {}
+
+.jq-schedule-plus .sc_main_scroll .sc_main .tl {
+	float: left;
+	height: 100%;
+	border-right: solid 1px #CCC;
+}
+
+.jq-schedule-plus .sc_main_scroll .sc_main .tl:hover {
+	background: #F0F0F0;
+}
+
+.jq-schedule-plus .sc_header .sc_date {
+	width: 100%;
+	text-align: center;
+	background: black;
+	color: white;
+	float: left;
+	border: 1px solid white;
+}
+
+.jq-schedule-plus .sc_header_time {
+	float: left;
+}
+
+.jq-schedule-plus .sc_time {
+	font-size: 10px;
+}
+
+.jq-schedule-plus .cant_res {
+	background-color: #999 !important;
+}
+
+.jq-schedule-plus .selected_time {
+	background-color: #a0e7c9;
+}
+
+.jq-schedule-plus .green {
+	background-color: #108000 !important;
+}
+
+.jq-schedule-plus .newAdd {
+	background-color: #108000 !important;
+}
+
+.full-opacity {
+	opacity: 1 !important;
+}
+
+.pinkDoWHeader {
+	background-color: #fe393980 !important;
+}
+
+/* Remove box-sizing applied from Bootstrap */
+.sc_header_cell,
+.sc_header_cell::before,
+.sc_header_cell::after {
+	-webkit-box-sizing: content-box !important;
+	-moz-box-sizing: content-box !important;
+	box-sizing: content-box !important;
+}
+
+.sc_time,
+.sc_time::before,
+.sc_time::after {
+	-webkit-box-sizing: content-box !important;
+	-moz-box-sizing: content-box !important;
+	box-sizing: content-box !important;
+}
+
+.sc_Bar *,
+.sc_Bar *::before,
+.sc_Bar *::after {
+	-webkit-box-sizing: content-box !important;
+	-moz-box-sizing: content-box !important;
+	box-sizing: content-box !important;
+}
+
+.sc_main_box *,
+.sc_main_box *::before,
+.sc_main_box *::after {
+	-webkit-box-sizing: content-box !important;
+	-moz-box-sizing: content-box !important;
+	box-sizing: content-box !important;
+}
+
+.sc_date,
+.sc_date::before,
+.sc_date::after {
+	-webkit-box-sizing: content-box !important;
+	-moz-box-sizing: content-box !important;
+	box-sizing: content-box !important;
+}

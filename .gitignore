@@ -1,34 +1,35 @@
-# Gradle files
-.gradle/
-build/
+# macOS
+# Finder metadata
+.DS_Store
+.AppleDouble
+.LSOverride
 
-# Local configuration file (sdk path, etc)
-local.properties
+# Icon files
+Icon?
 
-# Log/OS Files
-*.log
+# Resource forks
+._*
 
-# Android Studio generated files and folders
-captures/
-.externalNativeBuild/
-.cxx/
-*.aab
-*.apk
-output-metadata.json
+# Spotlight & Trash
+.Spotlight-V100
+.Trashes
 
-# IntelliJ
-*.iml
-.idea/
-misc.xml
-deploymentTargetDropDown.xml
-render.experimental.xml
+# File system events
+.fseventsd
 
-# Keystore files
-*.jks
-*.keystore
+# Document revisions
+.DocumentRevisions-V100
 
-# Google Services (e.g. APIs or Firebase)
-google-services.json
+# Legacy macOS files
+.AppleDB
+.AppleDesktop
+.apdisk
 
-# Android Profiling
-*.hprof
+# Temporary / network
+Network Trash Folder
+Temporary Items
+
+# Prevent accidental commits of macOS extended attributes
+*.DS_Store
+
+# End of macOS ignores

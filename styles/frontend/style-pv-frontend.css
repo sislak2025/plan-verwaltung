@@ -1,0 +1,551 @@
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css");
+
+#loginform .login-submit {
+    margin-top: 10px;
+}
+
+.select2-container--default .select2-results__group {
+    display: none !important;
+}
+
+#pv-plantable>.row {
+    overflow-x: auto;
+}
+
+.admin-bar .h-80vh {
+    height: calc(100vh - 190px);
+    overflow-y: auto;
+}
+
+.h-80vh {
+    height: calc(100vh - 155px);
+    overflow-y: auto;
+}
+
+.admin-bar .h-50vh {
+    height: calc(50vh - 190px);
+    overflow-y: auto;
+}
+
+.h-50vh {
+    height: calc(50vh - 155px);
+    overflow-y: auto;
+}
+
+.acf-fields>.acf-tab-wrap .acf-tab-group {
+    margin-bottom: 0px !important;
+}
+
+.pv_job_col_sort .pv_job_card:not(.pv_job_done),
+.pv_job_col_sort .pv_group_card {
+    cursor: grab;
+}
+
+.pv_active_job .pv-job-list-item {
+    cursor: grab;
+}
+
+#pv_modal .acf-field:not(.acf-field-repeater .acf-field) {
+    padding: 0px 0px 16px;
+    border: 0px;
+}
+
+#pv_modal .acf-field-group .acf-field:not(.acf-field-tab) {
+    margin: 0px;
+}
+
+#pv_modal .acf-field-group .acf-field .acf-field.acf-accordion {
+    margin: 0px;
+}
+
+#pv_modal .acf-tab-wrap {
+    margin-bottom: 10px;
+}
+
+#pv_modal .acf-fields .acf-field.acf-accordion {
+    margin: 0px !important;
+}
+
+#pv_modal .acf-fields .acf-field.acf-accordion.pv_accordion_job_gruppierung {
+    border: #ccd0d4 solid 1px !important;
+    margin-top: -1px !important;
+    margin-bottom: 16px !important;
+}
+
+#pv_modal .acf-field-pv-jobs {
+    padding-bottom: 0px !important;
+}
+
+#pv_modal .acf-field-tab+.acf-field-group {
+    padding: 0px !important;
+    margin: 0px !important;
+    border: none !important;
+}
+
+#pv_modal .acf-accordion-content .acf-fields {
+    margin: 0px 10px;
+    border: 0px;
+}
+
+#pv_modal .acf-accordion-content .acf-fields .acf-field {
+    margin: 0px !important;
+}
+
+#pv_modal .acf-accordion-content .acf-fields .acf-field[data-width] {
+    clear: none !important;
+}
+
+#pv_modal .acf-field-tab+.acf-field-group .acf-fields {
+    border: 0px !important;
+}
+
+#pv_modal .acf-field-tab+.acf-field-group>.acf-label {
+    margin: 0px;
+}
+
+#pv_modal .pv_inside_modal_spinner {
+    display: flex;
+    min-height: 300px;
+    justify-content: center;
+    align-items: center;
+}
+
+#pv_modal .pv_add_tracking .acf-label {
+    display: none;
+}
+
+#pv_modal .pv_add_tracking .acf-input {
+    text-align: right;
+}
+
+.acf-field-pv-job-entwicklungen .acf-table tr.acf-row .acf-row-handle.order,
+.acf-field-pv-job-updates .acf-table tr.acf-row .acf-row-handle.order {
+    pointer-events: none;
+}
+
+#acf-pv_bearbeitung_status {
+    padding: 5.5px 8px;
+}
+
+#pv_menu {
+    display: flex;
+    gap: 40px;
+    flex-direction: row;
+    align-items: center;
+}
+
+#pv_menu #pv_choose_filter_users {
+    width: unset;
+}
+
+#pv_user_menu ul {
+    display: flex;
+    gap: 20px;
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+    font-weight: 600;
+}
+
+.pv_menu_mobile_button {
+    display: none;
+    background: none;
+    color: inherit;
+    border: none;
+    padding: 0;
+    font: inherit;
+    cursor: pointer;
+    outline: inherit;
+}
+
+.pv_menu_mobile_button img {
+    width: 25px;
+    height: 25px;
+}
+
+#pv_menu_close_button {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+}
+
+@media screen and (max-width: 1500px) {
+    .pv_menu_mobile_button {
+        display: block;
+    }
+
+    #pv_user_menu {
+        display: none;
+        position: fixed;
+        right: 0;
+        top: 0;
+        width: 250px;
+        height: 100vh;
+        padding: 20px;
+        background-color: #f8f8f8;
+        border-left: 1px solid #d2d2d2;
+        z-index: 999;
+    }
+
+    #pv_user_menu ul {
+        flex-direction: column;
+    }
+}
+
+#pv_user_image img {
+    height: 60px;
+    width: 60px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+#pv_login_modal form label {
+    display: block;
+}
+
+#pv_login_modal form input:not(input[type="checkbox"]) {
+    width: 100%;
+}
+
+.pv_job_red {
+    background-color: #ffd1d1 !important;
+}
+
+.pv_job_orange {
+    background-color: #ffedd1 !important;
+}
+
+.pv_job_green {
+    background-color: #e0ffd1 !important;
+}
+
+.pv_job_blue {
+    background-color: #d5edf6 !important;
+}
+
+.pv_job_purple {
+    background-color: #f7ebff !important;
+}
+
+.acf-field-pv-job-color .acf-radio-list {
+    display: flex;
+    gap: 20px;
+}
+
+.acf-field-pv-job-color .acf-radio-list li:first-of-type {
+    margin-left: -20px;
+}
+
+.acf-radio-list .pv_job_color_keine,
+.acf-button-group .pv_job_color_keine {
+    display: inline-block;
+}
+
+.acf-radio-list .pv_job_color_red,
+.acf-button-group .pv_job_color_red {
+    display: inline-block;
+    background-color: #ffd1d1 !important;
+    padding: 4px 6px;
+}
+
+.acf-radio-list .pv_job_color_orange,
+.acf-button-group .pv_job_color_orange {
+    display: inline-block;
+    background-color: #ffedd1 !important;
+    padding: 4px 6px;
+}
+
+.acf-radio-list .pv_job_color_green,
+.acf-button-group .pv_job_color_green {
+    display: inline-block;
+    background-color: #e0ffd1 !important;
+    padding: 4px 6px;
+}
+
+.acf-radio-list .pv_job_color_blue,
+.acf-button-group .pv_job_color_blue {
+    display: inline-block;
+    background-color: #d5edf6 !important;
+    padding: 4px 6px;
+}
+
+.acf-radio-list .pv_job_color_purple,
+.acf-button-group .pv_job_color_purple {
+    display: inline-block;
+    background-color: #f7ebff !important;
+    padding: 4px 6px;
+}
+
+.acf-field-pv-job-color .acf-radio-list li {
+    font-size: 12px;
+    line-height: 16px;
+}
+
+.pv-acf_profil_form .acf-fields>.acf-field {
+    padding: 0px !important;
+}
+
+.pv-acf_profil_form .acf-image-uploader .show-if-value img {
+    border-radius: 50%;
+}
+
+#pv_modal .pv_private_visible .acf-label {
+    display: none;
+}
+
+#pv-passwords-table_wrapper,
+#pv-customers-table_wrapper {
+    padding: 5px 0px;
+}
+
+.pv_edit_password,
+.pv_edit_customer {
+    display: block;
+    text-align: center;
+    padding: 5px 20px;
+}
+
+.acf-accordion-title>label {
+    cursor: pointer;
+}
+
+#pv-passwords .acf-field-accordion {
+    border: 1px solid #767676 !important;
+    border-bottom: 0px !important;
+    border-radius: 3px;
+}
+
+#pv-passwords .acf-field-pv-id,
+.pv_hidden_field {
+    display: none;
+}
+
+.acf-th[data-name="pv_job_abwicklung_kuerzel"],
+.acf-th[data-name="pv_job_datei_kuerzel"] {
+    display: none;
+}
+
+#pv-passwords .acf-field-accordion .acf-accordion-title {
+    background-color: #f3f4f5;
+}
+
+#pv-passwords .acf-field-accordion:last-of-type {
+    border-bottom: 1px solid #767676 !important;
+}
+
+#pv-passwords .acf-form-submit,
+#pv-customers .acf-form-submit {
+    margin-top: 16px;
+}
+
+.pv-spinner {
+    display: none;
+    width: 1.2em;
+    height: 1.2em;
+}
+
+.pv_acf_hide_title .acf-label {
+    display: none;
+}
+
+.acf-field-pv-job-abwicklungsinfos .acf-fields>.acf-field {
+    border-top-width: 0px !important;
+    padding: 10px;
+}
+
+.acf-field-pv-job-abwicklungsinfos .acf-fields>.acf-field-textarea {
+    padding-top: 0px !important;
+}
+
+.acf-field-repeater .acf-field-textarea .acf-input {
+    display: flex;
+}
+
+.card-body .pv_user_thumbnail {
+    margin-right: 2px;
+}
+
+.card-body .pv_user_thumbnail img {
+    height: 15px;
+}
+
+.pv_user_thumbnail img {
+    height: 25px;
+    border-radius: 50%;
+}
+
+.pv_user_thumbnail {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+#pv-plantable .pv_job_card .card-header,
+#pv-plantable .pv_group_card .card-header {
+    display: flex;
+    padding-left: 5px;
+    padding-right: 5px;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#pv-plantable .pv_group_card .card-body .card-header:first-child {
+    border-radius: 0px;
+}
+
+#pv-plantable .pv_group_card .card-body .card-header:last-child {
+    border-bottom: 0px;
+}
+
+#pv-plantable .pv_group_card .accordion-button {
+    display: flex;
+    justify-content: space-between;
+    padding-left: 5px !important;
+    padding-right: 5px !important;
+}
+
+#pv-plantable .pv_group_card .accordion-item {
+    border-color: var(--bs-card-border-color);
+}
+
+#pv-plantable .pv_group_card .accordion-button:focus {
+    box-shadow: unset;
+}
+
+#pv-plantable .pv_group_card .accordion-button::after {
+    margin: 0 0 0 auto;
+}
+
+#pv-plantable .pv_group_card .accordion-button .pv_edit_job {
+    order: 3;
+}
+
+#pv-plantable .pv_group_card .accordion-item {
+    position: relative;
+}
+
+
+
+#pv-plantable .card-header {
+    /* min-height: 47px; */
+}
+
+#pv-plantable .pv_header_nickname {
+    font-size: 12px;
+    padding-left: 5px;
+}
+
+.acf-field-pv-job-entwicklungen .acf-repeater .acf-row-handle .acf-icon.-minus {
+    display: none !important;
+}
+
+.acf-field-pv-job-entwicklungen .acf-fields>.acf-field:not(.acf-field-accordion) {
+    padding: 10px !important;
+}
+
+.acf-field-pv-job-entwicklungen .acf-accordion-content .acf-fields {
+    margin: 0px !important;
+}
+
+.acf-fields .acf-field-repeater,
+.acf-field-group .acf-fields .acf-field-relationship {
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+}
+
+#pv-passwords-table td,
+#pv-passwords-table th,
+#pv-customers-table td,
+#pv-customers-table th {
+    min-width: 200px;
+    max-width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#pv-passwords-table td:nth-child(5),
+#pv-passwords-table th:nth-child(5) {
+    min-width: 70px;
+    max-width: 70px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#pv-customers-table td:nth-child(2),
+#pv-customers-table th:nth-child(2),
+#pv-customers-table td:nth-child(3),
+#pv-customers-table th:nth-child(3),
+#pv-customers-table td:nth-child(4),
+#pv-customers-table th:nth-child(4) {
+    min-width: 25px;
+    max-width: 25px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.pv_popover_link {
+    padding: 0px;
+}
+
+.popover,
+.popover .popover-body {
+    width: 420px;
+    max-width: 420px;
+}
+
+.jq-schedule .sc_main_box,
+.jq-schedule .sc_data {
+    max-height: 600px;
+}
+
+.jq-schedule .sc_bar .text {
+    font-weight: normal;
+    height: 1.3em;
+}
+
+#pv-time-schedule .pv_job_schedule_color .text,
+#pv-time-schedule .pv_job_schedule_color .time {
+    color: black;
+}
+
+#pv-time-schedule .pv_job_schedule_color.pv_job_keine {
+    background-color: #e3e3e3 !important;
+}
+
+#pv-time-schedule .pv_job_schedule_color .ui-resizable-handle {
+    background-color: #2d2d2d !important;
+}
+
+.pv-acf_request_form .acf-field {
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+    border: 0px !important;
+}
+
+.pv-notification-count-badge {
+    display: block;
+    position: absolute;
+    top: -5px;
+    right: -15px;
+    background-color: red;
+    font-size: 14px;
+    color: white;
+    padding: 3px;
+    border-radius: 50%;
+    min-width: 25px;
+    height: 25px;
+    text-align: center;
+    line-height: 19px;
+    z-index: 3;
+}
+
+.admin-bar #pv-notification-sidebar {
+    padding-top: 32px;
+}
+
+.pv-list-group-not .collapse .pv-not-list-item:first-of-type {
+    border-top: 0px !important;
+}
+
+.pv-acf_request_form .acf-field {
+    padding-top: 0px !important;
+}
