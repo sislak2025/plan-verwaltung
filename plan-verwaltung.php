@@ -90,4 +90,3 @@ include_once PV_ADMINISTRATION_PATH . 'controllers/controller-pv-emails.php';
 include_once PV_ADMINISTRATION_PATH . 'controllers/controller-pv-customers.php';
 include_once PV_ADMINISTRATION_PATH . 'controllers/controller-pv-cron.php';
 include_once PV_ADMINISTRATION_PATH . 'controllers/controller-pv-schedule.php';
-include_once PV_ADMINISTRATION_PATH . 'controllers/controller-pv-maintenance.php';
