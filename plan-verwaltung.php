@@ -76,7 +76,6 @@ add_filter('wp_revisions_to_keep', function ($num, $post) {
 
 /* classes */
 include_once PV_ADMINISTRATION_PATH . 'classes/class-pv-posttype.php';
-include_once PV_ADMINISTRATION_PATH . 'classes/class-pv-passwords.php';
 include_once PV_ADMINISTRATION_PATH . 'classes/class-pv-customers.php';
 include_once PV_ADMINISTRATION_PATH . 'classes/class-pv-users.php';
 include_once PV_ADMINISTRATION_PATH . 'classes/class-pv-importapi.php';
@@ -88,7 +87,7 @@ include_once PV_ADMINISTRATION_PATH . 'controllers/controller-pv-posttype.php';
 include_once PV_ADMINISTRATION_PATH . 'controllers/controller-pv-admin.php';
 include_once PV_ADMINISTRATION_PATH . 'controllers/controller-pv-frontend.php';
 include_once PV_ADMINISTRATION_PATH . 'controllers/controller-pv-emails.php';
-include_once PV_ADMINISTRATION_PATH . 'controllers/controller-pv-passwords.php';
 include_once PV_ADMINISTRATION_PATH . 'controllers/controller-pv-customers.php';
 include_once PV_ADMINISTRATION_PATH . 'controllers/controller-pv-cron.php';
 include_once PV_ADMINISTRATION_PATH . 'controllers/controller-pv-schedule.php';
+include_once PV_ADMINISTRATION_PATH . 'controllers/controller-pv-maintenance.php';

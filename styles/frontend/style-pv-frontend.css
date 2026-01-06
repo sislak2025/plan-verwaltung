@@ -118,7 +118,6 @@
     text-align: right;
 }
 
-.acf-field-pv-job-entwicklungen .acf-table tr.acf-row .acf-row-handle.order,
 .acf-field-pv-job-updates .acf-table tr.acf-row .acf-row-handle.order {
     pointer-events: none;
 }
@@ -293,12 +292,10 @@
     display: none;
 }
 
-#pv-passwords-table_wrapper,
 #pv-customers-table_wrapper {
     padding: 5px 0px;
 }
 
-.pv_edit_password,
 .pv_edit_customer {
     display: block;
     text-align: center;
@@ -309,13 +306,6 @@
     cursor: pointer;
 }
 
-#pv-passwords .acf-field-accordion {
-    border: 1px solid #767676 !important;
-    border-bottom: 0px !important;
-    border-radius: 3px;
-}
-
-#pv-passwords .acf-field-pv-id,
 .pv_hidden_field {
     display: none;
 }
@@ -325,15 +315,6 @@
     display: none;
 }
 
-#pv-passwords .acf-field-accordion .acf-accordion-title {
-    background-color: #f3f4f5;
-}
-
-#pv-passwords .acf-field-accordion:last-of-type {
-    border-bottom: 1px solid #767676 !important;
-}
-
-#pv-passwords .acf-form-submit,
 #pv-customers .acf-form-submit {
     margin-top: 16px;
 }
@@ -434,38 +415,16 @@
     padding-left: 5px;
 }
 
-.acf-field-pv-job-entwicklungen .acf-repeater .acf-row-handle .acf-icon.-minus {
-    display: none !important;
-}
-
-.acf-field-pv-job-entwicklungen .acf-fields>.acf-field:not(.acf-field-accordion) {
-    padding: 10px !important;
-}
-
-.acf-field-pv-job-entwicklungen .acf-accordion-content .acf-fields {
-    margin: 0px !important;
-}
-
 .acf-fields .acf-field-repeater,
 .acf-field-group .acf-fields .acf-field-relationship {
     padding-left: 10px !important;
     padding-right: 10px !important;
 }
 
-#pv-passwords-table td,
-#pv-passwords-table th,
 #pv-customers-table td,
 #pv-customers-table th {
     min-width: 200px;
     max-width: 200px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-#pv-passwords-table td:nth-child(5),
-#pv-passwords-table th:nth-child(5) {
-    min-width: 70px;
-    max-width: 70px;
     overflow: hidden;
     text-overflow: ellipsis;
 }
