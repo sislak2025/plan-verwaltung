@@ -62,8 +62,6 @@ if (!class_exists('PV_Frontend')) {
 
             wp_register_script('script-pv-frontend', PV_ADMINISTRATION_URL . 'scripts/frontend/script-pv-frontend.js', array('jquery'), PV_ADMINISTRATION_VERSION);
             wp_enqueue_script('script-pv-frontend');
-            wp_register_script('script-pv-passwords', PV_ADMINISTRATION_URL . 'scripts/frontend/script-pv-passwords.js', array('jquery'), PV_ADMINISTRATION_VERSION);
-            wp_enqueue_script('script-pv-passwords');
             wp_register_style('style-pv-frontend', PV_ADMINISTRATION_URL . 'styles/frontend/style-pv-frontend.css', false, PV_ADMINISTRATION_VERSION);
             wp_enqueue_style('style-pv-frontend');
 

@@ -38,9 +38,6 @@ if (!empty($current_user->ID)) {
     $html .= '<a href="/benutzer-uebersicht/">Benutzer-Übersicht</a>';
     $html .= '</li>';
     $html .= '<li>';
-    $html .= '<a href="/passwords/">Passwörter</a>';
-    $html .= '</li>';
-    $html .= '<li>';
     $html .= '<a href="/profil/">Mein Profil</a>';
     $html .= '</li>';
     $html .= '</ul>';

@@ -94,28 +94,6 @@ function pv_frontend_userview()
     }
 }
 
-add_shortcode('pv-frontend-passwords', 'pv_frontend_passwords');
-function pv_frontend_passwords()
-{
-    $frontend = new PV_Frontend();
-    $passwords_class = new PV_Passwords();
-
-    $passwords = $passwords_class->get_all_passwords();
-
-    if (!empty($passwords)) {
-
-        $data = array(
-            'template' => PV_ADMINISTRATION_PATH . 'views/view-pv-passwords.php',
-            'passwords' => $passwords
-        );
-        $html = $frontend->generate_html_output($data);
-
-        return $html;
-    } else {
-        return '';
-    }
-}
-
 add_shortcode('pv-frontend-customers', 'pv_frontend_customers');
 function pv_frontend_customers()
 {
