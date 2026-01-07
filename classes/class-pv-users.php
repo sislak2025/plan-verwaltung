@@ -155,10 +155,15 @@ if (!class_exists('PV_Users')) {
                 if (get_option('pv_job_sort_' . $user_id)) {
                     $order = get_option('pv_job_sort_' . $user_id);
                     $sorted = array_flip($order);
+                    $new_items = array();
                     foreach ($bearbeitungen as $bearbeitung) {
-                        $sorted[$bearbeitung->ID] = $bearbeitung;
+                        if (isset($sorted[$bearbeitung->ID])) {
+                            $sorted[$bearbeitung->ID] = $bearbeitung;
+                        } else {
+                            $new_items[$bearbeitung->ID] = $bearbeitung;
+                        }
                     }
-                    $bearbeitungen = $sorted;
+                    $bearbeitungen = $new_items + $sorted;
 
                     foreach ($sorted as $bearbeitungs_id => $bearbeitung) {
                         if (!is_object($bearbeitungen[$bearbeitungs_id])) {
