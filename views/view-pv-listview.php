@@ -15,12 +15,13 @@ if (!is_user_logged_in()) {
     $html .= '</div>';
     $html .= '</div>';
 
-    $html .= '<div class="modal" id="pv_modal" tabindex="-1" data-bs-backdrop="static" data-bs-focus="false">';
-    $html .= '<div class="modal-dialog modal-dialog-centered modal-lg">';
-    $html .= '<div class="modal-content">';
-    $html .= '<div class="modal-header">';
-    $html .= '<h5 class="modal-title pv_modal_title">Job hinzufügen</h5>';
-    $html .= '<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>';
+$html .= '<div class="modal" id="pv_modal" tabindex="-1" data-bs-backdrop="static" data-bs-focus="false">';
+$html .= '<div class="modal-dialog modal-dialog-centered modal-lg">';
+$html .= '<div class="modal-content">';
+$html .= '<div class="modal-header">';
+$html .= '<h5 class="modal-title pv_modal_title">Job hinzufügen</h5>';
+$html .= '<button type="button" class="btn btn-link p-0 me-2 pv_share_job d-none" title="Link kopieren" aria-label="Link kopieren"><i class="bi bi-share"></i></button>';
+$html .= '<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>';
     $html .= '</div>';
     $html .= '<div class="modal-body">';
     $html .= '</div>';

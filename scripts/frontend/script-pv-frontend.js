@@ -210,16 +210,62 @@ jQuery(document).ready(function () {
 });
 
 jQuery(document).ready(function () {
+    var pvModal = jQuery('#pv_modal');
+    var pvShareButton = pvModal.find('.pv_share_job');
+    var pvShareUrl = '';
+
+    function pvGetUrlWithoutJobId() {
+        var urlParams = new URLSearchParams(window.location.search);
+        urlParams.delete('jobid');
+        var query = urlParams.toString();
+        return window.location.pathname + (query ? '?' + query : '') + window.location.hash;
+    }
+
+    function pvOpenEditJobModal(jobId, trigger) {
+        var spinnerTarget = trigger ? jQuery(trigger) : null;
+        if (spinnerTarget) {
+            spinnerTarget.find('.pv-spinner').css('display', 'inline-block');
+            spinnerTarget.find('i').hide();
+        } else {
+            jQuery('#pv_modal .modal-body').html('<div class="pv_inside_modal_spinner"><span class="spinner-border"></span></div>');
+        }
+
+        pvShareUrl = window.location.origin + '/?jobid=' + jobId;
+        pvShareButton.removeClass('d-none');
+
+        var data = {
+            action: 'pv_edit_job',
+            job_id: jobId,
+            url: pvGetUrlWithoutJobId()
+        };
+        if (spinnerTarget) {
+            data.user_id = spinnerTarget.attr('data-userid');
+            data.status = spinnerTarget.attr('data-status');
+        }
+
+        jQuery('#pv_modal .modal-body').load(pv_js_variables.ajax_url, data, function () {
+            jQuery('#pv_modal .pv_modal_title').text('Job aktualisieren');
+            jQuery('#pv_modal').modal('show');
+            acf.do_action('append', jQuery('#pv_modal'));
+            if (spinnerTarget) {
+                spinnerTarget.find('.pv-spinner').hide();
+                spinnerTarget.find('i').show();
+            }
+        });
+    }
+
     jQuery('.pv_add_job').on('click', function () {
         var that = jQuery(this);
         that.find('.pv-spinner').css('display', 'inline-block');
         that.find('i').hide();
+        pvShareUrl = '';
+        pvShareButton.addClass('d-none');
         jQuery('#pv_modal .modal-body').load(pv_js_variables.ajax_url, {
             action: 'pv_add_job',
             user_id: jQuery(this).attr('data-userid'),
             projekt_id: jQuery(this).attr('data-projektid'),
             status: jQuery(this).attr('data-status'),
-            url: window.location.href
+            url: pvGetUrlWithoutJobId()
         }, function () {
             jQuery('#pv_modal .pv_modal_title').text('Job hinzufügen');
             jQuery('#pv_modal').modal('show');
@@ -230,22 +276,7 @@ jQuery(document).ready(function () {
     });
 
     jQuery('.pv_edit_job').on('click', function () {
-        var that = jQuery(this);
-        that.find('.pv-spinner').css('display', 'inline-block');
-        that.find('i').hide();
-        jQuery('#pv_modal .modal-body').load(pv_js_variables.ajax_url, {
-            action: 'pv_edit_job',
-            user_id: jQuery(this).attr('data-userid'),
-            job_id: jQuery(this).attr('data-jobid'),
-            status: jQuery(this).attr('data-status'),
-            url: window.location.href
-        }, function () {
-            jQuery('#pv_modal .pv_modal_title').text('Job aktualisieren');
-            jQuery('#pv_modal').modal('show');
-            acf.do_action('append', jQuery('#pv_modal'));
-            that.find('.pv-spinner').hide();
-            that.find('i').show();
-        });
+        pvOpenEditJobModal(jQuery(this).attr('data-jobid'), this);
     });
 
     jQuery(document).on('click', '#acf-pv_jobs .pv_already_selected', function () {
@@ -255,15 +286,41 @@ jQuery(document).ready(function () {
             var innerId = jQuery(this).attr('id') || jQuery(this).closest('.pv_already_selected').attr('id');
             var match = innerId.match(/^jobbearbeitung-(\d+)$/);
             var jobId = match ? match[1] : null;
+            pvShareUrl = jobId ? window.location.origin + '/?jobid=' + jobId : '';
+            if (pvShareUrl) {
+                pvShareButton.removeClass('d-none');
+            } else {
+                pvShareButton.addClass('d-none');
+            }
 
             jQuery('#pv_modal .modal-body').load(pv_js_variables.ajax_url, {
                 action: 'pv_edit_job',
                 job_id: jobId,
-                url: window.location.href
+                url: pvGetUrlWithoutJobId()
             }, function () {
                 jQuery('#pv_modal .pv_modal_title').text('Job aktualisieren');
                 acf.do_action('append', jQuery('#pv_modal'));
             });
+        }
+    });
+
+    var urlParams = new URLSearchParams(window.location.search);
+    var jobIdParam = urlParams.get('jobid');
+    if (jobIdParam && /^\d+$/.test(jobIdParam)) {
+        pvOpenEditJobModal(jobIdParam);
+        urlParams.delete('jobid');
+        var newQuery = urlParams.toString();
+        var newUrl = window.location.pathname + (newQuery ? '?' + newQuery : '') + window.location.hash;
+        window.history.replaceState({}, '', newUrl);
+    }
+
+    jQuery(document).on('click', '.pv_share_job', function () {
+        if (!pvShareUrl) {
+            return;
+        }
+
+        if (navigator.clipboard && window.isSecureContext) {
+            navigator.clipboard.writeText(pvShareUrl);
         }
     });
 
