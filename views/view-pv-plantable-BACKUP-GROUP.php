@@ -144,6 +144,7 @@ if (is_array($data['users']) && !empty($data['users'])) {
     $html .= '<div class="modal-content">';
     $html .= '<div class="modal-header">';
     $html .= '<h5 class="modal-title pv_modal_title">Job hinzufügen</h5>';
+    $html .= '<button type="button" class="btn btn-link p-0 me-2 pv_share_job d-none" title="Link kopieren" aria-label="Link kopieren"><i class="bi bi-share"></i></button>';
     $html .= '<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>';
     $html .= '</div>';
     $html .= '<div class="modal-body">';
