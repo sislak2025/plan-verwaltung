@@ -214,6 +214,13 @@ jQuery(document).ready(function () {
     var pvShareButton = pvModal.find('.pv_share_job');
     var pvShareUrl = '';
 
+    function pvGetUrlWithoutJobId() {
+        var urlParams = new URLSearchParams(window.location.search);
+        urlParams.delete('jobid');
+        var query = urlParams.toString();
+        return window.location.pathname + (query ? '?' + query : '') + window.location.hash;
+    }
+
     function pvOpenEditJobModal(jobId, trigger) {
         var spinnerTarget = trigger ? jQuery(trigger) : null;
         if (spinnerTarget) {
@@ -229,7 +236,7 @@ jQuery(document).ready(function () {
         var data = {
             action: 'pv_edit_job',
             job_id: jobId,
-            url: window.location.href
+            url: pvGetUrlWithoutJobId()
         };
         if (spinnerTarget) {
             data.user_id = spinnerTarget.attr('data-userid');
@@ -258,7 +265,7 @@ jQuery(document).ready(function () {
             user_id: jQuery(this).attr('data-userid'),
             projekt_id: jQuery(this).attr('data-projektid'),
             status: jQuery(this).attr('data-status'),
-            url: window.location.href
+            url: pvGetUrlWithoutJobId()
         }, function () {
             jQuery('#pv_modal .pv_modal_title').text('Job hinzufügen');
             jQuery('#pv_modal').modal('show');
@@ -289,7 +296,7 @@ jQuery(document).ready(function () {
             jQuery('#pv_modal .modal-body').load(pv_js_variables.ajax_url, {
                 action: 'pv_edit_job',
                 job_id: jobId,
-                url: window.location.href
+                url: pvGetUrlWithoutJobId()
             }, function () {
                 jQuery('#pv_modal .pv_modal_title').text('Job aktualisieren');
                 acf.do_action('append', jQuery('#pv_modal'));
