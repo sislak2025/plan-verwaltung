@@ -492,11 +492,11 @@ if (!class_exists('PV_MCP')) {
         {
             $post_types = array(
                 'jobs',
-                'jobanfragen',
+                //'jobanfragen',
                 'bearbeitungen',
-                'bearbeitungsgruppen',
+                //'bearbeitungsgruppen',
                 'kunden',
-                'trackings',
+                //'trackings',
             );
 
             return apply_filters('pv_mcp_post_types', $post_types);
