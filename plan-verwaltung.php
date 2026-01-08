@@ -81,7 +81,6 @@ include_once PV_ADMINISTRATION_PATH . 'classes/class-pv-users.php';
 include_once PV_ADMINISTRATION_PATH . 'classes/class-pv-importapi.php';
 include_once PV_ADMINISTRATION_PATH . 'classes/class-pv-frontend.php';
 include_once PV_ADMINISTRATION_PATH . 'classes/class-pv-jobrequest.php';
-include_once PV_ADMINISTRATION_PATH . 'classes/class-pv-mcp.php';
 
 /* controllers */
 include_once PV_ADMINISTRATION_PATH . 'controllers/controller-pv-posttype.php';
@@ -91,4 +90,3 @@ include_once PV_ADMINISTRATION_PATH . 'controllers/controller-pv-emails.php';
 include_once PV_ADMINISTRATION_PATH . 'controllers/controller-pv-customers.php';
 include_once PV_ADMINISTRATION_PATH . 'controllers/controller-pv-cron.php';
 include_once PV_ADMINISTRATION_PATH . 'controllers/controller-pv-schedule.php';
-include_once PV_ADMINISTRATION_PATH . 'controllers/controller-pv-mcp.php';
