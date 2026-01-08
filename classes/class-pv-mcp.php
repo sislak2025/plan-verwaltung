@@ -20,6 +20,18 @@ if (!class_exists('PV_MCP')) {
 
         public function permission_check($request)
         {
+            $method = $request->get_param('method');
+            if (empty($method)) {
+                $params = $request->get_json_params();
+                if (!empty($params['method'])) {
+                    $method = $params['method'];
+                }
+            }
+
+            if (in_array($method, array('initialize', 'tools/list'), true)) {
+                return true;
+            }
+
             if (is_user_logged_in() && current_user_can('edit_posts')) {
                 return true;
             }
@@ -30,6 +42,27 @@ if (!class_exists('PV_MCP')) {
         public function handle_request($request)
         {
             $payload = $request->get_json_params();
+            if (empty($payload)) {
+                $raw_body = $request->get_body();
+                if (!empty($raw_body)) {
+                    $decoded = json_decode($raw_body, true);
+                    if (is_array($decoded)) {
+                        $payload = $decoded;
+                    }
+                }
+            }
+
+            if (empty($payload)) {
+                $method = $request->get_param('method');
+                if (!empty($method)) {
+                    $payload = array(
+                        'jsonrpc' => '2.0',
+                        'id' => $request->get_param('id'),
+                        'method' => $method,
+                        'params' => $request->get_param('params'),
+                    );
+                }
+            }
 
             if (empty($payload) || empty($payload['method'])) {
                 return $this->error_response(null, -32600, 'Invalid Request');
@@ -47,7 +80,9 @@ if (!class_exists('PV_MCP')) {
                             'version' => PV_ADMINISTRATION_VERSION,
                         ),
                         'capabilities' => array(
-                            'tools' => array(),
+                            'tools' => array(
+                                'listChanged' => false,
+                            ),
                         ),
                     ));
                 case 'tools/list':
