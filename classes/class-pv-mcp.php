@@ -11,11 +11,31 @@ if (!class_exists('PV_MCP')) {
 
         public function register_routes()
         {
+            add_filter('rest_authentication_errors', array($this, 'bypass_rest_authentication'), 20);
             register_rest_route('plan-verwaltung/v1', '/mcp', array(
                 'methods' => 'POST',
                 'callback' => array($this, 'handle_request'),
                 'permission_callback' => array($this, 'permission_check'),
             ));
+        }
+
+        public function bypass_rest_authentication($result)
+        {
+            $rest_route = isset($_GET['rest_route']) ? (string) $_GET['rest_route'] : '';
+            if ($rest_route === '/plan-verwaltung/v1/mcp') {
+                return null;
+            }
+
+            $request_uri = isset($_SERVER['REQUEST_URI']) ? (string) $_SERVER['REQUEST_URI'] : '';
+            if ($request_uri !== '') {
+                $path = parse_url($request_uri, PHP_URL_PATH);
+                $prefix = '/' . rest_get_url_prefix() . '/plan-verwaltung/v1/mcp';
+                if ($path === $prefix) {
+                    return null;
+                }
+            }
+
+            return $result;
         }
 
         public function permission_check($request)
