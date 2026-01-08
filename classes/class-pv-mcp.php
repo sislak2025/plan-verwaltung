@@ -36,6 +36,26 @@ if (!class_exists('PV_MCP')) {
                 return true;
             }
 
+            $auth_header = '';
+            if (method_exists($request, 'get_header')) {
+                $auth_header = $request->get_header('authorization');
+            }
+
+            if (!empty($auth_header)) {
+                $bearer_prefix = 'bearer ';
+                if (stripos($auth_header, $bearer_prefix) === 0) {
+                    $token = trim(substr($auth_header, strlen($bearer_prefix)));
+                    $credentials = $this->parse_bearer_credentials($token);
+                    if ($credentials) {
+                        $user = wp_authenticate($credentials['username'], $credentials['password']);
+                        if (!is_wp_error($user) && user_can($user, 'edit_posts')) {
+                            wp_set_current_user($user->ID);
+                            return true;
+                        }
+                    }
+                }
+            }
+
             return new WP_Error('pv_mcp_forbidden', 'Zugriff verweigert.', array('status' => 401));
         }
 
@@ -370,6 +390,36 @@ if (!class_exists('PV_MCP')) {
                     'type' => 'text',
                     'text' => wp_json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES),
                 ),
+            );
+        }
+
+        private function parse_bearer_credentials($token)
+        {
+            if ($token === '') {
+                return null;
+            }
+
+            $raw = $token;
+            if (strpos($token, ':') === false) {
+                $decoded = base64_decode($token, true);
+                if ($decoded !== false) {
+                    $raw = $decoded;
+                }
+            }
+
+            if (strpos($raw, ':') === false) {
+                return null;
+            }
+
+            list($username, $password) = explode(':', $raw, 2);
+            $username = sanitize_user($username, true);
+            if ($username === '' || $password === '') {
+                return null;
+            }
+
+            return array(
+                'username' => $username,
+                'password' => $password,
             );
         }
 
