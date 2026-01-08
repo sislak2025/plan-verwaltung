@@ -20,6 +20,18 @@ if (!class_exists('PV_MCP')) {
 
         public function permission_check($request)
         {
+            $method = $request->get_param('method');
+            if (empty($method)) {
+                $params = $request->get_json_params();
+                if (!empty($params['method'])) {
+                    $method = $params['method'];
+                }
+            }
+
+            if (in_array($method, array('initialize', 'tools/list'), true)) {
+                return true;
+            }
+
             if (is_user_logged_in() && current_user_can('edit_posts')) {
                 return true;
             }
