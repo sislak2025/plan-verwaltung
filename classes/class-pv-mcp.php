@@ -402,7 +402,14 @@ if (!class_exists('PV_MCP')) {
                         if (!is_array($field) || !array_key_exists('value', $field)) {
                             continue;
                         }
-                        $acf_fields[$field_name] = $this->normalize_acf_value($field['value']);
+                        $value = $field['value'];
+                        if (!empty($field['type']) && $field['type'] === 'group' && !empty($field['key'])) {
+                            $group_value = get_field($field['key'], $post_id);
+                            if ($group_value !== null) {
+                                $value = $group_value;
+                            }
+                        }
+                        $acf_fields[$field_name] = $this->normalize_acf_value($value);
                     }
                 }
             } elseif (function_exists('get_fields')) {
