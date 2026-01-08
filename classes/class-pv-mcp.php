@@ -13,8 +13,13 @@ if (!class_exists('PV_MCP')) {
         {
             add_filter('rest_authentication_errors', array($this, 'bypass_rest_authentication'), 20);
             register_rest_route('plan-verwaltung/v1', '/mcp', array(
-                'methods' => 'POST',
+                'methods' => array('GET', 'POST'),
                 'callback' => array($this, 'handle_request'),
+                'permission_callback' => array($this, 'permission_check'),
+            ));
+            register_rest_route('plan-verwaltung/v1', '/mcp/stream', array(
+                'methods' => array('GET', 'POST'),
+                'callback' => array($this, 'handle_request_streamable'),
                 'permission_callback' => array($this, 'permission_check'),
             ));
         }
@@ -22,7 +27,7 @@ if (!class_exists('PV_MCP')) {
         public function bypass_rest_authentication($result)
         {
             $rest_route = isset($_GET['rest_route']) ? (string) $_GET['rest_route'] : '';
-            if ($rest_route === '/plan-verwaltung/v1/mcp') {
+            if ($rest_route === '/plan-verwaltung/v1/mcp' || $rest_route === '/plan-verwaltung/v1/mcp/stream') {
                 return null;
             }
 
@@ -30,7 +35,7 @@ if (!class_exists('PV_MCP')) {
             if ($request_uri !== '') {
                 $path = parse_url($request_uri, PHP_URL_PATH);
                 $prefix = '/' . rest_get_url_prefix() . '/plan-verwaltung/v1/mcp';
-                if ($path === $prefix) {
+                if ($path === $prefix || $path === $prefix . '/stream') {
                     return null;
                 }
             }
@@ -134,6 +139,29 @@ if (!class_exists('PV_MCP')) {
                 default:
                     return $this->error_response($id, -32601, 'Method not found');
             }
+        }
+
+        public function handle_request_streamable($request)
+        {
+            $response = $this->handle_request($request);
+            $data = rest_ensure_response($response)->get_data();
+
+            if (!headers_sent()) {
+                header('Content-Type: text/event-stream; charset=UTF-8');
+                header('Cache-Control: no-cache, no-transform');
+                header('X-Accel-Buffering: no');
+            }
+
+            echo "event: message\n";
+            echo 'data: ' . wp_json_encode($data, JSON_UNESCAPED_SLASHES) . "\n\n";
+            echo "event: done\n";
+            echo "data: {}\n\n";
+
+            if (function_exists('fastcgi_finish_request')) {
+                fastcgi_finish_request();
+            }
+
+            exit;
         }
 
         private function handle_tool_call($id, $payload)
