@@ -395,10 +395,22 @@ if (!class_exists('PV_MCP')) {
         private function get_custom_fields($post_id)
         {
             $acf_fields = array();
-            if (function_exists('get_fields')) {
+            if (function_exists('get_field_objects')) {
+                $field_objects = get_field_objects($post_id);
+                if (is_array($field_objects)) {
+                    foreach ($field_objects as $field_name => $field) {
+                        if (!is_array($field) || !array_key_exists('value', $field)) {
+                            continue;
+                        }
+                        $acf_fields[$field_name] = $this->normalize_acf_value($field['value']);
+                    }
+                }
+            } elseif (function_exists('get_fields')) {
                 $acf_data = get_fields($post_id);
                 if (is_array($acf_data)) {
-                    $acf_fields = $acf_data;
+                    foreach ($acf_data as $field_name => $field_value) {
+                        $acf_fields[$field_name] = $this->normalize_acf_value($field_value);
+                    }
                 }
             }
 
@@ -421,6 +433,52 @@ if (!class_exists('PV_MCP')) {
                 'acf' => $acf_fields,
                 'meta' => $filtered_meta,
             );
+        }
+
+        private function normalize_acf_value($value, array &$seen_ids = array(), int $depth = 0)
+        {
+            if ($depth > 6) {
+                return $value;
+            }
+
+            if (is_object($value)) {
+                if (method_exists($value, 'to_array')) {
+                    $value = $value->to_array();
+                } else {
+                    $value = (array) $value;
+                }
+            }
+
+            if (!is_array($value)) {
+                return $value;
+            }
+
+            if (
+                isset($value['ID'])
+                && is_numeric($value['ID'])
+                && function_exists('get_fields')
+                && $this->is_post_like_array($value)
+            ) {
+                $nested_id = (int) $value['ID'];
+                if (!isset($seen_ids[$nested_id])) {
+                    $seen_ids[$nested_id] = true;
+                    $nested_fields = get_fields($nested_id);
+                    if (is_array($nested_fields)) {
+                        $value['fields'] = $nested_fields;
+                    }
+                }
+            }
+
+            foreach ($value as $key => $item) {
+                $value[$key] = $this->normalize_acf_value($item, $seen_ids, $depth + 1);
+            }
+
+            return $value;
+        }
+
+        private function is_post_like_array(array $value): bool
+        {
+            return isset($value['post_type']) || isset($value['post_title']) || isset($value['post_name']);
         }
 
         private function get_plugin_post_types()
