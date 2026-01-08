@@ -14,12 +14,7 @@ if (!class_exists('PV_MCP')) {
             add_filter('rest_authentication_errors', array($this, 'bypass_rest_authentication'), 20);
             register_rest_route('plan-verwaltung/v1', '/mcp', array(
                 'methods' => array('GET', 'POST'),
-                'callback' => array($this, 'handle_request'),
-                'permission_callback' => array($this, 'permission_check'),
-            ));
-            register_rest_route('plan-verwaltung/v1', '/mcp/stream', array(
-                'methods' => array('GET', 'POST'),
-                'callback' => array($this, 'handle_request_streamable'),
+                'callback' => array($this, 'handle_request_or_stream'),
                 'permission_callback' => array($this, 'permission_check'),
             ));
         }
@@ -27,7 +22,7 @@ if (!class_exists('PV_MCP')) {
         public function bypass_rest_authentication($result)
         {
             $rest_route = isset($_GET['rest_route']) ? (string) $_GET['rest_route'] : '';
-            if ($rest_route === '/plan-verwaltung/v1/mcp' || $rest_route === '/plan-verwaltung/v1/mcp/stream') {
+            if ($rest_route === '/plan-verwaltung/v1/mcp') {
                 return null;
             }
 
@@ -35,12 +30,22 @@ if (!class_exists('PV_MCP')) {
             if ($request_uri !== '') {
                 $path = parse_url($request_uri, PHP_URL_PATH);
                 $prefix = '/' . rest_get_url_prefix() . '/plan-verwaltung/v1/mcp';
-                if ($path === $prefix || $path === $prefix . '/stream') {
+                if ($path === $prefix) {
                     return null;
                 }
             }
 
             return $result;
+        }
+
+        public function handle_request_or_stream($request)
+        {
+            if ($this->is_stream_request($request)) {
+                $this->handle_request_streamable($request);
+                return new WP_REST_Response(null, 200);
+            }
+
+            return $this->handle_request($request);
         }
 
         public function permission_check($request)
@@ -85,6 +90,54 @@ if (!class_exists('PV_MCP')) {
         }
 
         public function handle_request($request)
+        {
+            return $this->build_response($request);
+        }
+
+        public function handle_request_streamable($request)
+        {
+            $response = $this->build_response($request);
+            $data = rest_ensure_response($response)->get_data();
+
+            if (!headers_sent()) {
+                header('Content-Type: text/event-stream; charset=UTF-8');
+                header('Cache-Control: no-cache, no-transform');
+                header('X-Accel-Buffering: no');
+            }
+
+            echo "event: message\n";
+            echo 'data: ' . wp_json_encode($data, JSON_UNESCAPED_SLASHES) . "\n\n";
+            echo "event: done\n";
+            echo "data: {}\n\n";
+
+            if (function_exists('fastcgi_finish_request')) {
+                fastcgi_finish_request();
+            }
+
+            exit;
+        }
+
+        private function is_stream_request($request)
+        {
+            $accept_header = '';
+            if (method_exists($request, 'get_header')) {
+                $accept_header = $request->get_header('accept');
+            }
+
+            if (!empty($accept_header) && stripos($accept_header, 'text/event-stream') !== false) {
+                return true;
+            }
+
+            $stream_param = $request->get_param('stream');
+            if (is_string($stream_param)) {
+                $stream_param = strtolower($stream_param);
+                return in_array($stream_param, array('1', 'true', 'yes'), true);
+            }
+
+            return false;
+        }
+
+        private function build_response($request)
         {
             $payload = $request->get_json_params();
             if (empty($payload)) {
@@ -139,29 +192,6 @@ if (!class_exists('PV_MCP')) {
                 default:
                     return $this->error_response($id, -32601, 'Method not found');
             }
-        }
-
-        public function handle_request_streamable($request)
-        {
-            $response = $this->handle_request($request);
-            $data = rest_ensure_response($response)->get_data();
-
-            if (!headers_sent()) {
-                header('Content-Type: text/event-stream; charset=UTF-8');
-                header('Cache-Control: no-cache, no-transform');
-                header('X-Accel-Buffering: no');
-            }
-
-            echo "event: message\n";
-            echo 'data: ' . wp_json_encode($data, JSON_UNESCAPED_SLASHES) . "\n\n";
-            echo "event: done\n";
-            echo "data: {}\n\n";
-
-            if (function_exists('fastcgi_finish_request')) {
-                fastcgi_finish_request();
-            }
-
-            exit;
         }
 
         private function handle_tool_call($id, $payload)
