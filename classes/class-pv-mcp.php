@@ -222,10 +222,6 @@ if (!class_exists('PV_MCP')) {
                                 'type' => 'string',
                                 'description' => 'Suchbegriff für Titel/Inhalt.',
                             ),
-                            'include_meta' => array(
-                                'type' => 'boolean',
-                                'description' => 'Custom Fields in die Antwort aufnehmen.',
-                            ),
                         ),
                         'required' => array('post_type'),
                     ),
@@ -239,10 +235,6 @@ if (!class_exists('PV_MCP')) {
                             'post_id' => array(
                                 'type' => 'integer',
                                 'description' => 'ID des Beitrags.',
-                            ),
-                            'include_meta' => array(
-                                'type' => 'boolean',
-                                'description' => 'Custom Fields in die Antwort aufnehmen.',
                             ),
                         ),
                         'required' => array('post_id'),
@@ -271,7 +263,7 @@ if (!class_exists('PV_MCP')) {
                 return $this->tool_error('post_type ist erforderlich.');
             }
 
-            $available_types = get_post_types(array('show_ui' => true));
+            $available_types = $this->get_plugin_post_types();
             if (!in_array($post_type, $available_types, true)) {
                 return $this->tool_error('Unbekannter post_type: ' . $post_type);
             }
@@ -290,22 +282,26 @@ if (!class_exists('PV_MCP')) {
             }
 
             $search = !empty($arguments['search']) ? sanitize_text_field($arguments['search']) : '';
-            $include_meta = array_key_exists('include_meta', $arguments) ? (bool) $arguments['include_meta'] : true;
 
             $query_args = array(
                 'post_type' => $post_type,
-                'post_status' => 'any',
+                'post_status' => 'publish',
                 'posts_per_page' => $per_page,
                 'paged' => $page,
                 's' => $search,
             );
+
+            $bearbeitungen_exclusion = $this->get_bearbeitungen_exclusion_meta_query($post_type);
+            if (!empty($bearbeitungen_exclusion)) {
+                $query_args['meta_query'] = $bearbeitungen_exclusion;
+            }
 
             $query = new WP_Query($query_args);
             $posts = array();
 
             if (!empty($query->posts)) {
                 foreach ($query->posts as $post) {
-                    $posts[] = $this->build_post_payload($post, $include_meta);
+                    $posts[] = $this->build_post_payload($post, true);
                 }
             }
 
@@ -331,23 +327,29 @@ if (!class_exists('PV_MCP')) {
                 return $this->tool_error('Beitrag nicht gefunden.');
             }
 
-            $include_meta = array_key_exists('include_meta', $arguments) ? (bool) $arguments['include_meta'] : true;
+            if (!in_array($post->post_type, $this->get_plugin_post_types(), true)) {
+                return $this->tool_error('Beitrag nicht gefunden.');
+            }
 
-            return $this->build_post_payload($post, $include_meta, true);
+            if ($post->post_status !== 'publish') {
+                return $this->tool_error('Beitrag nicht gefunden.');
+            }
+
+            if ($this->should_exclude_bearbeitungen($post)) {
+                return $this->tool_error('Beitrag nicht gefunden.');
+            }
+
+            return $this->build_post_payload($post, true, true);
         }
 
         private function list_cpt_types($arguments)
         {
-            $include_builtin = !empty($arguments['include_builtin']);
-            $args = array('show_ui' => true);
-            if (!$include_builtin) {
-                $args['public'] = true;
-                $args['builtin'] = false;
-            }
-
-            $post_types = get_post_types($args, 'objects');
             $types = array();
-            foreach ($post_types as $type) {
+            foreach ($this->get_plugin_post_types() as $post_type) {
+                $type = get_post_type_object($post_type);
+                if (!$type) {
+                    continue;
+                }
                 $types[] = array(
                     'name' => $type->name,
                     'label' => $type->label,
@@ -376,7 +378,6 @@ if (!class_exists('PV_MCP')) {
                     'id' => (int) $post->post_author,
                     'name' => get_the_author_meta('display_name', $post->post_author),
                 ),
-                'link' => get_permalink($post),
             );
 
             if ($include_content) {
@@ -420,6 +421,56 @@ if (!class_exists('PV_MCP')) {
                 'acf' => $acf_fields,
                 'meta' => $filtered_meta,
             );
+        }
+
+        private function get_plugin_post_types()
+        {
+            $post_types = array(
+                'jobs',
+                'jobanfragen',
+                'bearbeitungen',
+                'bearbeitungsgruppen',
+                'kunden',
+                'trackings',
+            );
+
+            return apply_filters('pv_mcp_post_types', $post_types);
+        }
+
+        private function get_bearbeitungen_exclusion_meta_query($post_type)
+        {
+            if ($post_type !== 'bearbeitungen') {
+                return array();
+            }
+
+            $excluded_statuses = array('Abgebrochen', 'Fertiggestellt');
+
+            return array(
+                'relation' => 'OR',
+                array(
+                    'key' => 'pv_bearbeitung_status',
+                    'compare' => 'NOT EXISTS',
+                ),
+                array(
+                    'key' => 'pv_bearbeitung_status',
+                    'value' => $excluded_statuses,
+                    'compare' => 'NOT IN',
+                ),
+            );
+        }
+
+        private function should_exclude_bearbeitungen($post)
+        {
+            if ($post->post_type !== 'bearbeitungen') {
+                return false;
+            }
+
+            $status = get_post_meta($post->ID, 'pv_bearbeitung_status', true);
+            if ($status === '') {
+                return false;
+            }
+
+            return in_array($status, array('Abgebrochen', 'Fertiggestellt'), true);
         }
 
         private function format_tool_result($data)
