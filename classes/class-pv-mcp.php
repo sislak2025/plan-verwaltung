@@ -406,7 +406,9 @@ if (!class_exists('PV_MCP')) {
                 $additional_fields = get_field('pv_group_additional', $post_id);
                 if (is_array($additional_fields)) {
                     foreach ($additional_fields as $additional_key => $additional_field) {
-                        $acf_fields[$additional_key] = get_field($additional_key, $post_id);
+                        if (!empty($additional_key)) {
+                            $acf_fields[$additional_key] = get_field($additional_key, $post_id);
+                        }
                     }
                 }
             }
