@@ -395,28 +395,18 @@ if (!class_exists('PV_MCP')) {
         private function get_custom_fields($post_id)
         {
             $acf_fields = array();
-            if (function_exists('get_field_objects')) {
-                $field_objects = get_field_objects($post_id);
-                if (is_array($field_objects)) {
-                    foreach ($field_objects as $field_name => $field) {
-                        if (!is_array($field) || !array_key_exists('value', $field)) {
-                            continue;
-                        }
-                        $value = $field['value'];
-                        if (!empty($field['type']) && $field['type'] === 'group' && !empty($field['key'])) {
-                            $group_value = get_field($field['key'], $post_id);
-                            if ($group_value !== null) {
-                                $value = $group_value;
-                            }
-                        }
-                        $acf_fields[$field_name] = $this->normalize_acf_value($value);
-                    }
-                }
-            } elseif (function_exists('get_fields')) {
+            if (function_exists('get_fields')) {
                 $acf_data = get_fields($post_id);
                 if (is_array($acf_data)) {
-                    foreach ($acf_data as $field_name => $field_value) {
-                        $acf_fields[$field_name] = $this->normalize_acf_value($field_value);
+                    $acf_fields = $acf_data;
+                }
+            }
+
+            if (function_exists('get_field')) {
+                $additional_fields = get_field('pv_group_additional', $post_id);
+                if (is_array($additional_fields)) {
+                    foreach ($additional_fields as $additional_key => $additional_field) {
+                        $acf_fields[$additional_key] = get_field($additional_key, $post_id);
                     }
                 }
             }
