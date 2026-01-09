@@ -434,11 +434,6 @@ if (!class_exists('PV_MCP')) {
             );
         }
 
-        private function is_post_like_array(array $value): bool
-        {
-            return isset($value['post_type']) || isset($value['post_title']) || isset($value['post_name']);
-        }
-
         private function get_plugin_post_types()
         {
             $post_types = array(
