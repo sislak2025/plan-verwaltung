@@ -432,47 +432,6 @@ if (!class_exists('PV_MCP')) {
             );
         }
 
-        private function normalize_acf_value($value, array &$seen_ids = array(), int $depth = 0)
-        {
-            if ($depth > 6) {
-                return $value;
-            }
-
-            if (is_object($value)) {
-                if (method_exists($value, 'to_array')) {
-                    $value = $value->to_array();
-                } else {
-                    $value = (array) $value;
-                }
-            }
-
-            if (!is_array($value)) {
-                return $value;
-            }
-
-            if (
-                isset($value['ID'])
-                && is_numeric($value['ID'])
-                && function_exists('get_fields')
-                && $this->is_post_like_array($value)
-            ) {
-                $nested_id = (int) $value['ID'];
-                if (!isset($seen_ids[$nested_id])) {
-                    $seen_ids[$nested_id] = true;
-                    $nested_fields = get_fields($nested_id);
-                    if (is_array($nested_fields)) {
-                        $value['fields'] = $nested_fields;
-                    }
-                }
-            }
-
-            foreach ($value as $key => $item) {
-                $value[$key] = $this->normalize_acf_value($item, $seen_ids, $depth + 1);
-            }
-
-            return $value;
-        }
-
         private function is_post_like_array(array $value): bool
         {
             return isset($value['post_type']) || isset($value['post_title']) || isset($value['post_name']);
