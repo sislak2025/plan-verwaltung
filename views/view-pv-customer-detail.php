@@ -18,7 +18,7 @@ if (!is_user_logged_in()) {
     $html .= '<tr><th scope="row">Kundennummer</th><td>' . esc_html($customer['pv_id'] ?? '') . '</td></tr>';
     $html .= '<tr><th scope="row">Kürzel</th><td>' . esc_html($customer['pv_shortname'] ?? '') . '</td></tr>';
     $html .= '<tr><th scope="row">Prefix</th><td>' . esc_html($customer['pv_prefix'] ?? '') . '</td></tr>';
-    $html .= '<tr><th scope="row">Jobs</th><td>';
+    $html .= '<tr><th scope="row">Projekte</th><td>';
 
     if (!empty($customer_jobs)) {
         $job_links = array();
@@ -29,13 +29,13 @@ if (!is_user_logged_in()) {
             }
             $job_links[] = '<a href="' . esc_url(get_permalink($job_id)) . '">' . esc_html($job['post_title'] ?? get_the_title($job_id)) . '</a>';
         }
-        $html .= !empty($job_links) ? implode('<br>', $job_links) : 'Keine Jobs verknüpft';
+        $html .= !empty($job_links) ? implode('<br>', $job_links) : 'Keine Projekte verknüpft';
     } else {
-        $html .= 'Keine Jobs verknüpft';
+        $html .= 'Keine Projekte verknüpft';
     }
 
     $html .= '</td></tr>';
-    $html .= '<tr><th scope="row">Bearbeitungen</th><td>';
+    $html .= '<tr><th scope="row">Jobs</th><td>';
 
     if (!empty($customer_bearbeitungen)) {
         $bearbeitung_links = array();
@@ -46,9 +46,9 @@ if (!is_user_logged_in()) {
             }
             $bearbeitung_links[] = '<a href="' . esc_url(get_permalink($bearbeitung_id)) . '">' . esc_html($bearbeitung['post_title'] ?? get_the_title($bearbeitung_id)) . '</a>';
         }
-        $html .= !empty($bearbeitung_links) ? implode('<br>', $bearbeitung_links) : 'Keine Bearbeitungen verknüpft';
+        $html .= !empty($bearbeitung_links) ? implode('<br>', $bearbeitung_links) : 'Keine Jobs verknüpft';
     } else {
-        $html .= 'Keine Bearbeitungen verknüpft';
+        $html .= 'Keine Jobs verknüpft';
     }
 
     $html .= '</td></tr>';

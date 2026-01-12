@@ -31,7 +31,7 @@ if (!class_exists('PV_Frontend')) {
             $page_id = get_queried_object_id();
             $page_object = get_post($page_id);
 
-            if (strpos($page_object->post_content, '[pv-frontend') !== false) {
+            if (strpos($page_object->post_content, '[pv-frontend') !== false || is_singular('kunden')) {
                 add_filter('hello_elementor_enqueue_style', '__return_false');
 
                 wp_register_script('script-pv-jqueryui', PV_ADMINISTRATION_URL . 'scripts/jquery-ui.min.js', array('jquery'), '1.13.1');
