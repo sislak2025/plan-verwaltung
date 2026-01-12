@@ -116,6 +116,27 @@ function pv_frontend_customers()
     }
 }
 
+add_shortcode('pv-frontend-customer-detail', 'pv_frontend_customer_detail');
+function pv_frontend_customer_detail()
+{
+    $frontend = new PV_Frontend();
+    $customers_class = new PV_Customers();
+
+    $customer = $customers_class->get_customer(get_queried_object_id());
+    $customer_jobs = $customers_class->get_customer_jobs(get_queried_object_id());
+    $customer_bearbeitungen = $customers_class->get_customer_bearbeitungen(get_queried_object_id());
+
+    $data = array(
+        'template' => PV_ADMINISTRATION_PATH . 'views/view-pv-customer-detail.php',
+        'customer' => $customer,
+        'customer_jobs' => $customer_jobs,
+        'customer_bearbeitungen' => $customer_bearbeitungen
+    );
+    $html = $frontend->generate_html_output($data);
+
+    return $html;
+}
+
 add_shortcode('pv-frontend-request', 'pv_frontend_request');
 function pv_frontend_request()
 {
