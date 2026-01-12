@@ -7,11 +7,8 @@ if (!is_user_logged_in()) {
     $html .= '<div class="col-12"><div id="message" class="warning"><p>Du musst eingeloggt sein um den Kunden sehen zu können!</p></div></div>';
 } else if (!empty($data['customer'])) {
     $customer = $data['customer'];
-    $customer_jobs = $customer['pv_jobs_of_kunde'] ?? array();
-
-    if (!is_array($customer_jobs) && !empty($customer_jobs)) {
-        $customer_jobs = array($customer_jobs);
-    }
+    $customer_jobs = $data['customer_jobs'] ?? array();
+    $customer_bearbeitungen = $data['customer_bearbeitungen'] ?? array();
 
     $html .= '<div class="col-12">';
     $html .= '<h1>Kunde: ' . esc_html($customer['post_title']) . '</h1>';
@@ -26,18 +23,32 @@ if (!is_user_logged_in()) {
     if (!empty($customer_jobs)) {
         $job_links = array();
         foreach ($customer_jobs as $job) {
-            if (empty($job)) {
-                continue;
-            }
-            $job_id = is_object($job) ? $job->ID : (is_array($job) ? ($job['ID'] ?? 0) : 0);
+            $job_id = $job['ID'] ?? 0;
             if (!$job_id) {
                 continue;
             }
-            $job_links[] = '<a href="' . esc_url(get_permalink($job_id)) . '">' . esc_html(get_the_title($job_id)) . '</a>';
+            $job_links[] = '<a href="' . esc_url(get_permalink($job_id)) . '">' . esc_html($job['post_title'] ?? get_the_title($job_id)) . '</a>';
         }
         $html .= !empty($job_links) ? implode('<br>', $job_links) : 'Keine Jobs verknüpft';
     } else {
         $html .= 'Keine Jobs verknüpft';
+    }
+
+    $html .= '</td></tr>';
+    $html .= '<tr><th scope="row">Bearbeitungen</th><td>';
+
+    if (!empty($customer_bearbeitungen)) {
+        $bearbeitung_links = array();
+        foreach ($customer_bearbeitungen as $bearbeitung) {
+            $bearbeitung_id = $bearbeitung['ID'] ?? 0;
+            if (!$bearbeitung_id) {
+                continue;
+            }
+            $bearbeitung_links[] = '<a href="' . esc_url(get_permalink($bearbeitung_id)) . '">' . esc_html($bearbeitung['post_title'] ?? get_the_title($bearbeitung_id)) . '</a>';
+        }
+        $html .= !empty($bearbeitung_links) ? implode('<br>', $bearbeitung_links) : 'Keine Bearbeitungen verknüpft';
+    } else {
+        $html .= 'Keine Bearbeitungen verknüpft';
     }
 
     $html .= '</td></tr>';
