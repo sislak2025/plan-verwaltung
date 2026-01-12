@@ -35,6 +35,30 @@ if (!class_exists('PV_Customers')) {
             }
             return $customers;
         }
+
+        public function get_customer($post_id)
+        {
+            $post_id = absint($post_id);
+            if (!$post_id) {
+                return array();
+            }
+
+            $customer_post = get_post($post_id);
+            if (empty($customer_post) || $customer_post->post_type !== 'kunden') {
+                return array();
+            }
+
+            $customer = $customer_post->to_array();
+            $customer_fields = get_fields($customer['ID']);
+
+            if (!empty($customer_fields)) {
+                foreach ($customer_fields as $key => $value) {
+                    $customer[$key] = $value;
+                }
+            }
+
+            return $customer;
+        }
     }
     $PV_Customers = new PV_Customers();
 }
