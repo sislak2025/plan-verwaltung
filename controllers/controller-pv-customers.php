@@ -17,6 +17,7 @@ function pv_load_customers_table()
             $array[] = $customer['pv_shortname'];
             $array[] = $customer['pv_prefix'] ?? '';
             $array[] = $customer['ID'];
+            $array[] = get_permalink($customer['ID']);
             $data['data'][] = $array;
         }
         echo json_encode($data);

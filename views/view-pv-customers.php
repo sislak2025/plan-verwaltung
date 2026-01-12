@@ -14,7 +14,7 @@ if (!is_user_logged_in()) {
     #$html .= '<div class="d-flex"><button type="button" class="btn btn-primary pv_add_customer">Neuer Kunde<span class="pv-spinner spinner-border ms-1"></span></button></div>';
     $html .= '<div class="table-responsive">';
     $html .= '<table id="pv-customers-table" class="table table-striped table-bordered nowrap" style="width:100%; display: none;">';
-    $html .= '<thead><tr><th>Kunde</th><th>Kürzel</th><th>Prefix</th><th>Bearbeiten</th></tr></thead><tbody>';
+    $html .= '<thead><tr><th>Kunde</th><th>Kürzel</th><th>Prefix</th><th>Aktionen</th></tr></thead><tbody>';
     $html .= '</tbody></table>';
     $html .= '</div>';
 

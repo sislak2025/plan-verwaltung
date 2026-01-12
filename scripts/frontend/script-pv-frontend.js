@@ -542,8 +542,9 @@ jQuery(document).ready(function () {
                 'data': 'action',
                 'searchable': false,
                 'sortable': false,
+                'className': 'pv_customer_actions',
                 'render': function (data, type, row, meta) {
-                    return '<a href="javascript:void(0);" class="pv_edit_customer" data-id="' + row[3] + '"><i class="bi bi-pen"></i><span class="pv-spinner spinner-border"></span></a>';
+                    return '<a href="javascript:void(0);" class="pv_edit_customer" data-id="' + row[3] + '"><i class="bi bi-pen"></i><span class="pv-spinner spinner-border"></span></a><a href="' + row[4] + '" class="ms-3"><i class="bi bi-box-arrow-up-right"></i></a>';
                 }
             }
         ],
