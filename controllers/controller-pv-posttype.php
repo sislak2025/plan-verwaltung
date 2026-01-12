@@ -276,6 +276,31 @@ function register_jobs_posttype()
                 'return_format' => 'object',
                 'bidirectional' => true,
                 'bidirectional_target' => array('pv_jobs')
+            ),
+            array(
+                'key' => 'pv_kunde_of_job',
+                'label' => 'Kunde verknüpfen',
+                'name' => 'pv_kunde_of_job',
+                'type' => 'relationship',
+                'prefix' => '',
+                'instructions' => '',
+                'required' => 0,
+                'conditional_logic' => 0,
+                'wrapper' => array(
+                    'width' => '',
+                    'class' => '',
+                    'id' => '',
+                ),
+                'default_value' => '',
+                'post_type' => 'kunden',
+                'taxonomy' => '',
+                'filters' => array('search'),
+                'elements' => array(),
+                'min' => 0,
+                'max' => 1,
+                'return_format' => 'object',
+                'bidirectional' => true,
+                'bidirectional_target' => array('pv_jobs_of_kunde')
             )
         ),
         'location' => array(
@@ -1926,7 +1951,7 @@ function register_kunden_posttype()
         'has_archive' => false,
         'can_export' => true,
         'exclude_from_search' => false,
-        'publicly_queryable' => false,
+        'publicly_queryable' => true,
         'capability_type' => 'page',
         'rewrite' => array('slug' => $post_slug)
     );
@@ -1999,6 +2024,31 @@ function register_kunden_posttype()
                 'maxlength' => '',
                 'readonly' => 0,
                 'disabled' => 0,
+            ),
+            array(
+                'key' => 'pv_jobs_of_kunde',
+                'label' => 'Job verknüpfen',
+                'name' => 'pv_jobs_of_kunde',
+                'type' => 'relationship',
+                'prefix' => '',
+                'instructions' => '',
+                'required' => 0,
+                'conditional_logic' => 0,
+                'wrapper' => array(
+                    'width' => '',
+                    'class' => '',
+                    'id' => '',
+                ),
+                'default_value' => '',
+                'post_type' => 'jobs',
+                'taxonomy' => '',
+                'filters' => array('search'),
+                'elements' => array(),
+                'min' => 0,
+                'max' => 1,
+                'return_format' => 'object',
+                'bidirectional' => true,
+                'bidirectional_target' => array('pv_kunde_of_job')
             )
         ),
         'location' => array(

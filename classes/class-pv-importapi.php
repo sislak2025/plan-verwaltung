@@ -191,14 +191,43 @@ if (!class_exists('PV_Importapi')) {
 
                         $post_id = $posttype_class->insert_post($post_data);
 
-                        if (empty(get_field('pv_prefix', $post_id))) {
-                            $kunden_projects = $this->get_api_data($request['url'] . '/' . $record['urno'] . '/projects');
-                            if (!empty($kunden_projects['project_list'])) {
+                        $kunden_projects = $this->get_api_data($request['url'] . '/' . $record['urno'] . '/projects');
+                        if (empty(get_field('pv_prefix', $post_id)) && !empty($kunden_projects['project_list'])) {
+                            $re = '/.+?(?=-\d)/';
+                            $str = $kunden_projects['project_list'][0]['projectno'];
+                            preg_match_all($re, $str, $matches, PREG_SET_ORDER, 0);
+                            update_field('pv_prefix', $matches[0][0], $post_id);
+                        }
 
-                                $re = '/.+?(?=-\d)/';
-                                $str = $kunden_projects['project_list'][0]['projectno'];
-                                preg_match_all($re, $str, $matches, PREG_SET_ORDER, 0);
-                                update_field('pv_prefix', $matches[0][0], $post_id);
+                        if (!empty($kunden_projects['project_list'])) {
+                            $jobs = array();
+                            foreach ($kunden_projects['project_list'] as $project) {
+                                $posts = get_posts(
+                                    array(
+                                        'numberposts' => 1,
+                                        'post_type' => 'jobs',
+                                        'post_status' => ['publish', 'abgeschlossen'],
+                                        'meta_key' => 'pv_id',
+                                        'meta_value' => $project['urno']
+                                    )
+                                );
+                                if (!empty($posts[0])) {
+                                    $jobs[] = $posts[0]->ID;
+                                }
+                            }
+                            if (!empty($jobs)) {
+                                $jobs_of_kunde = get_field('pv_jobs_of_kunde', $post_id);
+                                $jobs_array = array();
+                                if (!empty($jobs_of_kunde)) {
+                                    foreach ($jobs_of_kunde as $job_item) {
+                                        $jobs_array[] = $job_item->ID;
+                                    }
+                                }
+                                if (!empty($jobs_array)) {
+                                    $toAdd = array_diff($jobs_array, $jobs);
+                                    $jobs = array_merge($jobs, $toAdd);
+                                }
+                                update_field('pv_jobs_of_kunde', $jobs, $post_id);
                             }
                         }
                     }
