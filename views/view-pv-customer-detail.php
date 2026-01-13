@@ -1,18 +1,20 @@
 <?php
+acf_form(array('form' => false));
+
 $html = '';
-$html .= '<div id="pv-customer-detail" class="container-fluid p-1">';
-$html .= '<div class="row g-2">';
 
 if (!is_user_logged_in()) {
-    $html .= '<div class="col-12"><div id="message" class="warning"><p>Du musst eingeloggt sein um den Kunden sehen zu können!</p></div></div>';
+    $html .= '<div id="pv-customer-detail" class="container-fluid p-1"><div class="row g-2"><div class="col-12"><div id="message" class="warning"><p>Du musst eingeloggt sein um den Kunden sehen zu können!</p></div></div></div></div>';
 } else if (!empty($data['customer'])) {
     $customer = $data['customer'];
     $customer_jobs = $data['customer_jobs'] ?? array();
     $customer_bearbeitungen = $data['customer_bearbeitungen'] ?? array();
 
+    $html .= '<div id="pv-customer-detail" class="container-fluid p-1">';
+    $html .= '<div class="row g-2 mb-2">';
     $html .= '<div class="col-12">';
     $html .= '<div class="card">';
-    $html .= '<div class="card-header h5 d-flex align-items-center justify-content-between"">Kundendaten</div>';
+    $html .= '<div class="card-header h5">Kundendaten</div>';
     $html .= '<div class="card-body">';
     $html .= '<form class="row g-3">';
     $html .= '<div class="col-12 col-md-6 col-xxl-4">';
@@ -38,8 +40,9 @@ if (!is_user_logged_in()) {
     $html .= '</form>';
     $html .= '</div>';
     $html .= '</div>';
+    $html .= '</div>';
+    $html .= '</div>';
 
-    $html .= '<div class="col-12">';
     $html .= '<div class="row g-2">';
     $html .= '<div class="col-12 col-xxl-4">';
     $html .= generate_customer_job_card($customer_jobs, 'Jobs vom Kunden');
@@ -50,6 +53,8 @@ if (!is_user_logged_in()) {
     $html .= '<div class="col-12 col-xxl-4">';
     $html .= generate_customer_status_card($customer_bearbeitungen, array('Geliefert - Abgeschlossen'), 'Abgeschlossene Jobs');
     $html .= '</div>';
+    $html .= '</div>';
+
     $html .= '</div>';
 
     $html .= '<div class="modal" id="pv_modal" tabindex="-1" data-bs-backdrop="static">';
@@ -69,13 +74,10 @@ if (!is_user_logged_in()) {
     $html .= '</div>';
     $html .= '</div>';
     $html .= '</div>';
-    $html .= '</div>';
 } else {
-    $html .= '<div class="col-12"><div id="message" class="warning"><p>Kein Kunde gefunden.</p></div></div>';
+    $html .= '<div id="pv-customer-detail" class="container-fluid p-1"><div class="row g-2"><div class="col-12"><div id="message" class="warning"><p>Kein Kunde gefunden.</p></div></div></div></div>';
 }
 
-$html .= '</div>';
-$html .= '</div>';
 echo $html;
 
 function generate_customer_job_card($jobs, $headline)
