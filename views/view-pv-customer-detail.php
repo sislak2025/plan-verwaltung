@@ -23,10 +23,10 @@ if (!is_user_logged_in()) {
 
     $html .= '<div class="row g-2">';
     $html .= '<div class="col-12 col-xxl-4">';
-    $html .= generate_customer_job_card($customer_jobs, 'Jobs vom Kunden');
+    $html .= generate_customer_status_card($customer_bearbeitungen, array('Vorbereitung', 'Durchführung - in Bearbeitung', 'Durchführung - Layout', 'Durchführung - Korrektur'), 'Jobs in Durchführung');
     $html .= '</div>';
     $html .= '<div class="col-12 col-xxl-4">';
-    $html .= generate_customer_status_card($customer_bearbeitungen, array('Vorbereitung', 'Durchführung - in Bearbeitung', 'Durchführung - Layout', 'Durchführung - Korrektur'), 'Jobs in Durchführung');
+    $html .= generate_customer_status_card($customer_bearbeitungen, array('Durchführung - in Druck', 'Durchführung - bei Kunde', 'Durchführung - in Abstimmung mit Kontakter', 'Durchführung - bei Freelancer', 'Durchführung - RZ/Livegang'), 'Erledigte Jobs');
     $html .= '</div>';
     $html .= '<div class="col-12 col-xxl-4">';
     $html .= generate_customer_status_card($customer_bearbeitungen, array('Geliefert - Abgeschlossen'), 'Abgeschlossene Jobs');
