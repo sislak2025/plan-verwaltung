@@ -1,5 +1,4 @@
 <?php
-acf_form(array('form' => false));
 
 $html = '';
 
@@ -16,28 +15,7 @@ if (!is_user_logged_in()) {
     $html .= '<div class="card">';
     $html .= '<div class="card-header h5">Kundendaten</div>';
     $html .= '<div class="card-body">';
-    $html .= '<form class="row g-3">';
-    $html .= '<div class="col-12 col-md-6 col-xxl-4">';
-    $html .= '<label class="form-label">Kunde</label>';
-    $html .= '<input type="text" class="form-control" value="' . esc_attr($customer['post_title'] ?? '') . '" readonly>';
-    $html .= '</div>';
-    $html .= '<div class="col-6 col-xxl-2">';
-    $html .= '<label class="form-label">Kundennummer</label>';
-    $html .= '<input type="text" class="form-control" value="' . esc_attr($customer['pv_id'] ?? '') . '" readonly>';
-    $html .= '</div>';
-    $html .= '<div class="col-6 col-xxl-3">';
-    $html .= '<label class="form-label">Kürzel</label>';
-    $html .= '<input type="text" class="form-control" value="' . esc_attr($customer['pv_shortname'] ?? '') . '" readonly>';
-    $html .= '</div>';
-    $html .= '<div class="col-12 col-md-6 col-xxl-3">';
-    $html .= '<label class="form-label">Prefix</label>';
-    $html .= '<input type="text" class="form-control" value="' . esc_attr($customer['pv_prefix'] ?? '') . '" readonly>';
-    $html .= '</div>';
-    $html .= '<div class="col-12">';
-    $html .= '<label class="form-label">Notizen</label>';
-    $html .= '<textarea class="form-control" rows="8" readonly>' . esc_textarea($customer['post_content'] ?? '') . '</textarea>';
-    $html .= '</div>';
-    $html .= '</form>';
+    $html .= acf_form();
     $html .= '</div>';
     $html .= '</div>';
     $html .= '</div>';
