@@ -12,7 +12,7 @@ if (!is_user_logged_in()) {
 
     $html .= '<div class="col-12">';
     $html .= '<div class="card">';
-    $html .= '<div class="card-header h5">Kundendaten</div>';
+    $html .= '<div class="card-header h5 d-flex align-items-center justify-content-between"">Kundendaten</div>';
     $html .= '<div class="card-body">';
     $html .= '<form class="row g-3">';
     $html .= '<div class="col-12 col-md-6 col-xxl-4">';
