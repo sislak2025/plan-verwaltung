@@ -15,7 +15,7 @@ if (!is_user_logged_in()) {
     $html .= '<div class="card">';
     $html .= '<div class="card-header h5">Kundendaten</div>';
     $html .= '<div class="card-body">';
-    $html .= acf_form();
+    $html .= $data['acf_form'];
     $html .= '</div>';
     $html .= '</div>';
     $html .= '</div>';

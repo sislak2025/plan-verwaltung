@@ -125,12 +125,16 @@ function pv_frontend_customer_detail()
     $customer = $customers_class->get_customer(get_queried_object_id());
     $customer_jobs = $customers_class->get_customer_jobs(get_queried_object_id());
     $customer_bearbeitungen = $customers_class->get_customer_bearbeitungen(get_queried_object_id());
+    ob_start();
+    $acf_form = acf_form();
+    ob_end_clean();
 
     $data = array(
         'template' => PV_ADMINISTRATION_PATH . 'views/view-pv-customer-detail.php',
         'customer' => $customer,
         'customer_jobs' => $customer_jobs,
-        'customer_bearbeitungen' => $customer_bearbeitungen
+        'customer_bearbeitungen' => $customer_bearbeitungen,
+        'acf_form' => $acf_form
     );
     $html = $frontend->generate_html_output($data);
 
