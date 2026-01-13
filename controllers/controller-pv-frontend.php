@@ -127,7 +127,11 @@ function pv_frontend_customer_detail()
     $customer_bearbeitungen = $customers_class->get_customer_bearbeitungen(get_queried_object_id());
 
     ob_start();
-    acf_form();
+    acf_form(
+        array(
+            'fields' => array('pv_id', 'pv_kunde_notiz')
+        )
+    );
     $acf_form = ob_get_contents();
     ob_end_clean();
 
