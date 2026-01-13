@@ -92,7 +92,7 @@ function generate_customer_job_card($jobs, $headline)
                 continue;
             }
             $job_title = $job['post_title'] ?? get_the_title($job_id);
-            $html .= '<div class="list-group-item">';
+            $html .= '<div class="list-group-item pv-job-list-item">';
             $html .= '<a class="text-decoration-none" href="' . esc_url(get_permalink($job_id)) . '">';
             $html .= esc_html($job_title);
             $html .= '</a>';
