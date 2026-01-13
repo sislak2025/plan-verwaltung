@@ -78,10 +78,7 @@ function generate_customer_job_card($jobs, $headline)
             $html .= '</a>';
             $html .= '</div>';
         }
-    } else {
-        $html .= '<div class="list-group-item text-muted">Keine Jobs verknüpft</div>';
     }
-
     $html .= '</div>';
     $html .= '</div>';
     return $html;
@@ -126,11 +123,6 @@ function generate_customer_status_card($bearbeitungen, $status, $headline)
             $html .= '</div>';
         }
     }
-
-    if (!$has_items) {
-        $html .= '<div class="list-group-item text-muted">Keine Jobs in diesem Status</div>';
-    }
-
     $html .= '</div>';
     $html .= '</div>';
     return $html;
