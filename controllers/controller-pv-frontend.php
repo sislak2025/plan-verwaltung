@@ -125,8 +125,10 @@ function pv_frontend_customer_detail()
     $customer = $customers_class->get_customer(get_queried_object_id());
     $customer_jobs = $customers_class->get_customer_jobs(get_queried_object_id());
     $customer_bearbeitungen = $customers_class->get_customer_bearbeitungen(get_queried_object_id());
+
     ob_start();
-    $acf_form = acf_form();
+    acf_form();
+    $acf_form = ob_get_contents();
     ob_end_clean();
 
     $data = array(
